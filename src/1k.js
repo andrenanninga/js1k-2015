@@ -18,26 +18,25 @@ c.t = c.translate;
 m = []
 
 function n(x, y) {
-  // create an elevated path for the train tracks
+  // // create a map with random values
+  m[y] = m[y] || r();
+
+  // // create an elevated path for the train tracks
   if(x == 0 || x == 1) { 
     return -1;
   }
 
-  // create a path for the road
+  // // create a path for the road
   if((y % 40) == 6 || (y % 40) == 7) {
     return 0;
   }
 
-  // create a map with random values
-  m[y] = m[y] || r();
-
-  return s(x - m[y] * 15);
+  return s(x - m[y] * 9);
 }
 
 // set the zero point of the canvas in the center
-// c.t(360,320)
-c.t(a.width/2,a.height/2)
-// d = e = 0
+c.t(480,320)
+// c.t(a.width/2,a.height/2)
 
 setInterval(function() {
   e += 0.3;
@@ -55,11 +54,11 @@ setInterval(function() {
       h = ~~(n(i, j+d) * 8);
 
       // determine if this tile should be a tree
-      T = !!(n(h,i)>0.8 && (i < 0 || i > 2))
+      T = n(h,i)>0.8 && (i < 0 || i > 2)
 
       // draw the tile
       c.b();
-      
+
       c.l(x,     y + h);                      // bottom corner
       c.l(x + M, y - N + n(i, j+d+1) * 8);    // right corner
       c.l(x,     y - M + n(i-1, j+d+1) * 8 -T*40);  // top corner
@@ -70,17 +69,18 @@ setInterval(function() {
         // if tile is road
         (j+d) % 40 == 6 ?
           '#333' 
-        : i == 1 ? // else if tile is train track
+        // else if tile is train track
+        : i == 1 ?
           '#B52' 
         // else if sides of train track
-        : i == 0 || i == 2 ? 
+        : i == 2 ? 
           '#953'
         // else if tile is tree
         : T ? 
           'rgb('+(76-h+j*2)+','+(116-h*2)+','+(30-h-i)+')'
         // else
         : 
-          'rgb('+(113-h+j*2)+','+(161-h)+','+(61-h)+')'
+          'rgb('+(113-h+j*3)+','+(161-h)+','+(61-h)+')'
 
       // fill the tile
       c.f()
@@ -119,12 +119,20 @@ setInterval(function() {
 
       // set train color
       c.fillStyle = 
-        j < 10 ? // if bottom
+        // if bottom
+        j < 9 ?
           '#555' 
-        : // else
-        j == 31 ? // if top
-          '#FD7' 
-        : // else
+        // if top of engine
+        : i > 6 && j > 30 ?
+          '#76E'
+        // if engine
+        : i > 6 ?
+          '#65E'
+        // else if top
+        : j > 30 ?
+          '#FD7'
+        // else
+        :
           '#FB0'
 
       c.l(x,N+J)
@@ -134,5 +142,4 @@ setInterval(function() {
       c.f()
     }
   }
-
 }, 30);
