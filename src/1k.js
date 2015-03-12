@@ -35,17 +35,18 @@ function n(x, y) {
 }
 
 // set the zero point of the canvas in the center
-c.t(360,320)
+// c.t(360,320)
+c.t(a.width/2,a.height/2)
 // d = e = 0
 
 setInterval(function() {
-  e += 0.2;
+  e += 0.4;
   d = ~~e;
   c.save();
   c.t(-(e%1)*M, +(e%1)*N)
 
-  for(i = -18; i < 18; i++) {
-    for(j = 18; j >= -18; j--) {
+  for(i = -20; i < 20; i++) {
+    for(j = 20; j >= -20; j--) {
       // isometric coordinates
       x = j * M + i * M;
       y = i * N - j * N;
@@ -64,8 +65,8 @@ setInterval(function() {
       c.l(x,     y - M + n(i-1, j+d+1) * 8 -T*40);  // top corner
       c.l(x - M, y - N + n(i-1, j+d) * 8);    // left corner
 
-      // make tile color
-      c.fillStyle = c.strokeStyle =
+      // set tile color
+      c.fillStyle =
         i == 1 ? // if tile is train track
           '#B52' 
         : // else
@@ -101,8 +102,8 @@ setInterval(function() {
         c.b()
         x-=8
 
-        c.l(x,y)                                // bottom
-        c.l(x,y-t)                              // top
+        c.l(x,y)                             // bottom
+        c.l(x,y-t)                           // top
         c.quadraticCurveTo(x-64,y+4,x-t*2,y) // wire
 
         // stroke
@@ -114,24 +115,30 @@ setInterval(function() {
   // draw rail tracks
   c.l(-3200,1600)
   c.l(3200,-1600)
-  c.l(-3200,1616)
+  c.moveTo(-3200,1616)
   c.l(3200,-1584)
   c.stroke()
   c.restore()
 
+  // draw wagons
   for(i = 8; i > 0; i--) {
     x = i * M + (i%2)*2 - t*2;
     y = -i * N - (i%2) + t;
     
-    if(s(i+e+r()) > 0.98) {
-      y -= 1;
-    }
-
-
     for(j = 5; j < 32; j+=2){
       J=8-j+y
       c.b()
-      c.fillStyle = j < 13 ? '#A33' : j == 31 ? '#FFD' : '#CCD'
+
+      // set train color
+      c.fillStyle = 
+        j < 10 ? // if bottom
+          '#555' 
+        : // else
+        j == 31 ? // if top
+          '#FD7' 
+        : // else
+          '#FB0'
+
       c.l(x,N+J)
       c.l(x+M,J)
       c.l(x,y-8-j)
