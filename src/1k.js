@@ -40,7 +40,7 @@ c.t(a.width/2,a.height/2)
 // d = e = 0
 
 setInterval(function() {
-  e += 0.4;
+  e += 0.3;
   d = ~~e;
   c.save();
   c.t(-(e%1)*M, +(e%1)*N)
@@ -67,43 +67,31 @@ setInterval(function() {
 
       // set tile color
       c.fillStyle =
-        i == 1 ? // if tile is train track
-          '#B52' 
-        : // else
-          (j+d) % 40 == 6 ? // if tile is road
+        // if tile is road
+        (j+d) % 40 == 6 ?
           '#333' 
-        : // else
-          T ? // if tile is tree
+        : i == 1 ? // else if tile is train track
+          '#B52' 
+        // else if sides of train track
+        : i == 0 || i == 2 ? 
+          '#953'
+        // else if tile is tree
+        : T ? 
           'rgb('+(76-h+j*2)+','+(116-h*2)+','+(30-h-i)+')'
-        : // else
+        // else
+        : 
           'rgb('+(113-h+j*2)+','+(161-h)+','+(61-h)+')'
-
-      // color sides of elevated path for the train track
-      // if(i == 0 || i == 2) { 
-      //   c.fillStyle='#953';
-      // }
-
-      // color top of elevated path for the train track
-      // if(i == 1) { 
-      //   c.fillStyle='#B52';
-      // }
-
-      // // color path for the road
-      // if((j+d) % 40 == 6) { 
-      //   c.fillStyle='#333'; 
-      // }
 
       // fill the tile
       c.f()
 
-      c.strokeStyle='#631'
       // every 4th tile draw a pole
       if(i == 0 && (j+d) % 4 == 0) {
         c.b()
         x-=8
 
-        c.l(x,y)                             // bottom
-        c.l(x,y-t)                           // top
+        c.l(x,y)                               // bottom
+        c.l(x,y-t)                             // top
         c.quadraticCurveTo(x-64,y+4,x-t*2,y) // wire
 
         // stroke
@@ -147,4 +135,4 @@ setInterval(function() {
     }
   }
 
-}, 40);
+}, 30);
