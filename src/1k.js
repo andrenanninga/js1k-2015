@@ -10,13 +10,11 @@ N = 16;
 r = Math.random;
 s = Math.sin;
 
-c.m = c.moveTo;
 c.l = c.lineTo;
-c.s = c.stroke;
 c.f = c.fill;
 c.b = c.beginPath;
 c.t = c.translate;
-c.lineWidth=2;
+// c.lineWidth=2;
 m = []
 
 function n(x, y) {
@@ -61,7 +59,7 @@ setInterval(function() {
       // draw the tile
       c.b();
       
-      c.m(x,     y + h);                      // bottom corner
+      c.l(x,     y + h);                      // bottom corner
       c.l(x + M, y - N + n(i, j+d+1) * 8);    // right corner
       c.l(x,     y - M + n(i-1, j+d+1) * 8 -T*40);  // top corner
       c.l(x - M, y - N + n(i-1, j+d) * 8);    // left corner
@@ -103,23 +101,22 @@ setInterval(function() {
         c.b()
         x-=8
 
-        c.m(x,y)                                // bottom
+        c.l(x,y)                                // bottom
         c.l(x,y-t)                              // top
-        c.l(x,y-t+10)                           // start of wire
-        c.quadraticCurveTo(x-64,y+4,x-t*2,y+10) // wire
+        c.quadraticCurveTo(x-64,y+4,x-t*2,y) // wire
 
         // stroke
-        c.s()
+        c.stroke()
       }
     }
   }
 
   // draw rail tracks
-  c.m(-3200,1600)
+  c.l(-3200,1600)
   c.l(3200,-1600)
-  c.m(-3200,1616)
+  c.l(-3200,1616)
   c.l(3200,-1584)
-  c.s()
+  c.stroke()
   c.restore()
 
   for(i = 8; i > 0; i--) {
@@ -135,7 +132,7 @@ setInterval(function() {
       J=8-j+y
       c.b()
       c.fillStyle = j < 13 ? '#A33' : j == 31 ? '#FFD' : '#CCD'
-      c.m(x,N+J)
+      c.l(x,N+J)
       c.l(x+M,J)
       c.l(x,y-8-j)
       c.l(x-M,J)
