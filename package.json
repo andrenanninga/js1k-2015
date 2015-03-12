@@ -1,0 +1,26 @@
+{
+  "name": "js1k-2015",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FakeYou/js1k-2015.git"
+  },
+  "author": "Andre Nanninga <ag.nanninga@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FakeYou/js1k-2015/issues"
+  },
+  "homepage": "https://github.com/FakeYou/js1k-2015",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-bytediff": "^0.2.1",
+    "gulp-connect": "^2.2.0",
+    "gulp-plumber": "^1.0.0",
+    "gulp-uglify": "^1.1.0"
+  }
+}
