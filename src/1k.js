@@ -25,7 +25,7 @@ function n(x, y) {
   }
 
   // // create a path for the road
-  if((y % 40) == 6 || (y % 40) == 7) {
+  if((y % 150) == 6 || (y % 150) == 7) {
     return 0;
   }
 
@@ -34,10 +34,9 @@ function n(x, y) {
 
 // set the zero point of the canvas in the center
 c.t(480,320)
-// c.t(a.width/2,a.height/2)
 
 setInterval(function() {
-  e += 0.2;
+  e += 0.6;
   d = ~~e;
   c.save();
   c.t(-(e%1)*M, +(e%1)*N);
@@ -52,7 +51,7 @@ setInterval(function() {
       h = ~~n(i, j+d);
 
       // determine if this tile should be a tree
-      T = n(h)>3  && (i < 0 || i > 2);
+      T = n(h,i) > 5 && (i < 0 || i > 2);
 
       // draw the tile
       c.b();
@@ -65,7 +64,7 @@ setInterval(function() {
       // set tile color
       c.fillStyle =
         // if tile is road
-        (j+d) % 40 == 6 ?
+        (j+d) % 150 == 6 ?
           '#333' 
         // else if tile is train track
         : i == 1 ?
@@ -75,7 +74,7 @@ setInterval(function() {
           '#953'
         // else if tile is tree
         : T ? 
-          'rgb('+(76-h+j*2)+','+(116-h*2)+','+(30-h-i)+')'
+          'rgb('+(76-h+j*2)+','+(116-h*3)+','+(30-h-i)+')'
         // else
         : 
           'rgb('+(113-h+j*3)+','+(161-h)+','+(61)+')';
@@ -90,7 +89,7 @@ setInterval(function() {
 
         c.l(x,y);                             // bottom
         c.l(x,y-t);                           // top
-        c.quadraticCurveTo(x-64,y+4,x-t*2,y); // wire
+        c.quadraticCurveTo(x-64,y,x-t*2,y); // wire
 
         // stroke
         c.stroke();
@@ -99,8 +98,7 @@ setInterval(function() {
   }
 
   // draw sleepers
-  c.strokeStyle = '#433'
-  c.lineWidth = 3
+  c.lineWidth = 2.1
   for(; i > -20; i-=0.5) {
     x = i * M;
     y = - i * N;
