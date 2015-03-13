@@ -14,7 +14,7 @@ c.l = c.lineTo;
 c.f = c.fill;
 c.b = c.beginPath;
 c.t = c.translate;
-// c.lineWidth=2;
+// c.lineWidth=1.5;
 m = []
 
 function n(x, y) {
@@ -117,23 +117,25 @@ setInterval(function() {
       J=8-j+y
       c.b()
 
+
+
       // set train color
       c.fillStyle = 
         // if bottom
         j < 9 ?
-          '#555' 
+          '#546' 
         // if top of engine
         : i > 6 && j > 30 ?
-          '#76E'
+          '#D48'
         // if engine
         : i > 6 ?
-          '#65E'
+          '#C03'
         // else if top
         : j > 30 ?
-          '#FD7'
+          '#FC5'
         // else
         :
-          '#FB0'
+          '#fb1'
 
       c.l(x,N+J)
       c.l(x+M,J)
@@ -141,5 +143,34 @@ setInterval(function() {
       c.l(x-M,J)
       c.f()
     }
+
+    // windows
+    if(i < 7) {
+      c.fillStyle = '#026'
+      c.b()
+      c.l(x+4,y-2)
+      c.l(x+28,y-14)
+      c.l(x+28,y-8)
+      c.l(x+4,y+4)
+      c.f()
+    }
   }
+
+  // engine cabin side
+  c.fillStyle = '#DDD'
+  c.b()
+  c.l(160, -66)
+  c.l(139, -77)
+  c.l(160, -87)
+  c.f()
+
+  // engine cabin top
+  c.fillStyle = '#fff'
+  c.b()
+  c.l(160, -87)
+  c.l(128, -103)
+  c.l(108, -93)
+  c.l(140, -77)
+  c.f()
+
 }, 30);
