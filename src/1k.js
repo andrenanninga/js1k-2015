@@ -42,7 +42,7 @@ setInterval(function() {
   e += 0.3;
   d = ~~e;
   c.save();
-  c.t(-(e%1)*M, +(e%1)*N)
+  c.t(-(e%1)*M, +(e%1)*N);
 
   for(i = -20; i < 20; i++) {
     for(j = 20; j >= -20; j--) {
@@ -54,7 +54,7 @@ setInterval(function() {
       h = ~~(n(i, j+d) * 8);
 
       // determine if this tile should be a tree
-      T = n(h,i)>0.8 && (i < 0 || i > 2)
+      T = n(h,i)>0.8 && (i < 0 || i > 2);
 
       // draw the tile
       c.b();
@@ -80,33 +80,33 @@ setInterval(function() {
           'rgb('+(76-h+j*2)+','+(116-h*2)+','+(30-h-i)+')'
         // else
         : 
-          'rgb('+(113-h+j*3)+','+(161-h)+','+(61-h)+')'
+          'rgb('+(113-h+j*3)+','+(161-h)+','+(61-h)+')';
 
       // fill the tile
-      c.f()
+      c.f();
 
       // every 4th tile draw a pole
       if(i == 0 && (j+d) % 4 == 0) {
-        c.b()
-        x-=8
+        c.b();
+        x -= 8;
 
-        c.l(x,y)                               // bottom
-        c.l(x,y-t)                             // top
-        c.quadraticCurveTo(x-64,y+4,x-t*2,y) // wire
+        c.l(x,y);                             // bottom
+        c.l(x,y-t);                           // top
+        c.quadraticCurveTo(x-64,y+4,x-t*2,y); // wire
 
         // stroke
-        c.stroke()
+        c.stroke();
       }
     }
   }
 
   // draw rail tracks
-  c.l(-3200,1600)
-  c.l(3200,-1600)
-  c.moveTo(-3200,1616)
-  c.l(3200,-1584)
-  c.stroke()
-  c.restore()
+  c.l(-3200, 1600);
+  c.l(3200, -1600);
+  c.moveTo(-3200, 1616);
+  c.l(3200, -1584);
+  c.stroke();
+  c.restore();
 
   // draw wagons
   for(i = 8; i > 0; i--) {
@@ -114,10 +114,8 @@ setInterval(function() {
     y = -i * N - (i%2) + t;
     
     for(j = 5; j < 32; j+=2){
-      J=8-j+y
-      c.b()
-
-
+      J = 8 - j + y;
+      c.b();
 
       // set train color
       c.fillStyle = 
@@ -135,42 +133,42 @@ setInterval(function() {
           '#FC5'
         // else
         :
-          '#fb1'
+          '#fb1';
 
-      c.l(x,N+J)
-      c.l(x+M,J)
-      c.l(x,y-8-j)
-      c.l(x-M,J)
-      c.f()
+      c.l(x, N + J);
+      c.l(x + M, J);
+      c.l(x, y - 8 - j);
+      c.l(x - M, J);
+      c.f();
     }
 
     // windows
     if(i < 7) {
-      c.fillStyle = '#026'
-      c.b()
-      c.l(x+4,y-2)
-      c.l(x+28,y-14)
-      c.l(x+28,y-8)
-      c.l(x+4,y+4)
-      c.f()
+      c.fillStyle = '#026';
+      c.b();
+      c.l(x + 4, y - 2);
+      c.l(x + 28, y - 14);
+      c.l(x + 28, y - 8);
+      c.l(x + 4, y + 4);
+      c.f();
     }
   }
 
   // engine cabin side
-  c.fillStyle = '#DDD'
-  c.b()
-  c.l(160, -66)
-  c.l(139, -77)
-  c.l(160, -87)
-  c.f()
+  c.fillStyle = '#DDD';
+  c.b();
+  c.l(160, -66);
+  c.l(139, -77);
+  c.l(160, -87);
+  c.f();
 
   // engine cabin top
-  c.fillStyle = '#fff'
-  c.b()
-  c.l(160, -87)
-  c.l(128, -103)
-  c.l(108, -93)
-  c.l(140, -77)
-  c.f()
+  c.fillStyle = '#fff';
+  c.b();
+  c.l(160, -87);
+  c.l(128, -103);
+  c.l(108, -93);
+  c.l(140, -77);
+  c.f();
 
 }, 30);
