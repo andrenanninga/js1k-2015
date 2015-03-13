@@ -7,9 +7,7 @@ d = e = t = 64;
 M = 32;
 N = 16;
 
-r = Math.random;
-s = Math.sin;
-
+c.m = c.moveTo
 c.l = c.lineTo;
 c.f = c.fill;
 c.b = c.beginPath;
@@ -19,11 +17,11 @@ m = []
 
 function n(x, y) {
   // // create a map with random values
-  m[y] = m[y] || r();
+  m[y] = m[y] || Math.random();
 
   // // create an elevated path for the train tracks
   if(x == 0 || x == 1) { 
-    return -1;
+    return -8;
   }
 
   // // create a path for the road
@@ -31,7 +29,7 @@ function n(x, y) {
     return 0;
   }
 
-  return s(x - m[y] * 9);
+  return Math.sin(x - m[y] * 9) * 8;
 }
 
 // set the zero point of the canvas in the center
@@ -39,7 +37,7 @@ c.t(480,320)
 // c.t(a.width/2,a.height/2)
 
 setInterval(function() {
-  e += 0.3;
+  e += 0.2;
   d = ~~e;
   c.save();
   c.t(-(e%1)*M, +(e%1)*N);
@@ -51,18 +49,18 @@ setInterval(function() {
       y = i * N - j * N;
 
       // get the height for these coordinates
-      h = ~~(n(i, j+d) * 8);
+      h = ~~n(i, j+d);
 
       // determine if this tile should be a tree
-      T = n(h,i)>0.8 && (i < 0 || i > 2);
+      T = n(h)>3  && (i < 0 || i > 2);
 
       // draw the tile
       c.b();
 
-      c.l(x,     y + h);                      // bottom corner
-      c.l(x + M, y - N + n(i, j+d+1) * 8);    // right corner
-      c.l(x,     y - M + n(i-1, j+d+1) * 8 -T*40);  // top corner
-      c.l(x - M, y - N + n(i-1, j+d) * 8);    // left corner
+      c.l(x,     y + h + 1);                      // bottom corner
+      c.l(x + M, y - N + n(i, j+d+1));    // right corner
+      c.l(x,     y - M + n(i-1, j+d+1) -T*38);  // top corner
+      c.l(x - M, y - N + n(i-1, j+d));    // left corner
 
       // set tile color
       c.fillStyle =
@@ -71,22 +69,22 @@ setInterval(function() {
           '#333' 
         // else if tile is train track
         : i == 1 ?
-          '#B52' 
+          '#b52' 
         // else if sides of train track
-        : i == 2 ? 
+        : i < 3 && i > -1 ? 
           '#953'
         // else if tile is tree
         : T ? 
           'rgb('+(76-h+j*2)+','+(116-h*2)+','+(30-h-i)+')'
         // else
         : 
-          'rgb('+(113-h+j*3)+','+(161-h)+','+(61-h)+')';
+          'rgb('+(113-h+j*3)+','+(161-h)+','+(61)+')';
 
       // fill the tile
       c.f();
 
       // every 4th tile draw a pole
-      if(i == 0 && (j+d) % 4 == 0) {
+      if(i == 0 && (j+d) % 4 < 1) {
         c.b();
         x -= 8;
 
@@ -100,10 +98,23 @@ setInterval(function() {
     }
   }
 
+  // draw sleepers
+  c.strokeStyle = '#433'
+  c.lineWidth = 3
+  for(; i > -20; i-=0.5) {
+    x = i * M;
+    y = - i * N;
+    c.m(x-6, y-3)
+    c.l(x+22,y+11)
+  }
+  c.stroke();
+  c.b()
+
   // draw rail tracks
-  c.l(-3200, 1600);
+  c.strokeStyle = '#aaa'
+  c.m(-3200, 1600);
   c.l(3200, -1600);
-  c.moveTo(-3200, 1616);
+  c.m(-3200, 1616);
   c.l(3200, -1584);
   c.stroke();
   c.restore();
@@ -121,16 +132,16 @@ setInterval(function() {
       c.fillStyle = 
         // if bottom
         j < 9 ?
-          '#546' 
+          '#435' 
         // if top of engine
         : i > 6 && j > 30 ?
-          '#D48'
+          '#d48'
         // if engine
         : i > 6 ?
-          '#C03'
+          '#c03'
         // else if top
         : j > 30 ?
-          '#FC5'
+          '#fc5'
         // else
         :
           '#fb1';
@@ -155,7 +166,7 @@ setInterval(function() {
   }
 
   // engine cabin side
-  c.fillStyle = '#DDD';
+  c.fillStyle = '#ddd';
   c.b();
   c.l(160, -66);
   c.l(139, -77);
@@ -171,4 +182,4 @@ setInterval(function() {
   c.l(140, -77);
   c.f();
 
-}, 30);
+}, 35);
