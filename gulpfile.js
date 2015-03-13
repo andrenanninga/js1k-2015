@@ -25,8 +25,7 @@ gulp.task('uglify', function() {
     .pipe(plumber())
     .pipe(uglify())
     .pipe(rename('1k.uglify.js'))
-    .pipe(gulp.dest('build'))
-    .pipe(connect.reload());
+    .pipe(gulp.dest('build'));
 });
 
 gulp.task('regpack', function() {
@@ -34,8 +33,7 @@ gulp.task('regpack', function() {
     .pipe(plumber())
     .pipe(run('node lib/regpack.js build/1k.uglify.js', { verbosity: 0 }))
     .pipe(rename('1k.regpack.js'))
-    .pipe(gulp.dest('build'))
-    .pipe(connect.reload());
+    .pipe(gulp.dest('build'));
 });
 
 gulp.task('shim', function() {
@@ -54,8 +52,13 @@ gulp.task('index', function() {
 });
 
 gulp.task('size', function() {
-  return gulp.src('build/*.js')
+  return gulp.src(['build/*.js', 'src/1k.js'])
     .pipe(size({ showFiles: true }));
+});
+
+gulp.task('reload', function() {
+  return gulp.src('build/*.*')
+    .pipe(connect.reload());
 });
 
 gulp.task('watch', function() {
@@ -68,7 +71,8 @@ gulp.task('build', function() {
     'regpack',
     'size',
     'index',
-    'shim'
+    'shim',
+    'reload'
   );
 });
 
