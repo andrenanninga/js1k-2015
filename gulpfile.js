@@ -1,7 +1,6 @@
 'use strict';
 
 var fs          = require('fs');
-var del         = require('del');
 var runSequence = require('run-sequence');
 
 var gulp        = require('gulp');
